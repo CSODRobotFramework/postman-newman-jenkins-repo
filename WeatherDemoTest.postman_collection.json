@@ -1,0 +1,84 @@
+{
+	"variables": [],
+	"info": {
+		"name": "WeatherDemoTest",
+		"_postman_id": "fedadb6b-c94f-c39e-e646-84fdd8e2703e",
+		"description": "This is testing the API api.openweathermap.org",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET weather by RANDOM city id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"// Saving the response \"name\" value into an environment variable",
+							"postman.setEnvironmentVariable(\"CITYID\", jsonData.name);",
+							"",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var cityIds = [707860, // Hurzuf\r",
+							"\t\t\t   519188, // Novinki,\r",
+							"\t\t\t   1283378 // Gorkhā\r",
+							"\t\t\t  ];\r",
+							"\t\t\t\t\t\t\t\r",
+							"// Get a random number between 0-9\r",
+							"var randomCityId = Math.floor((Math.random() *3) + 1);\r",
+							"\t\t\t\t\t\t\t\r",
+							"// Set an environment variable to the value of the random city id from array,\r",
+							"postman.setEnvironmentVariable(\"CITYID\", cityIds[randomCityId])"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/weather?id={{CITYID}}&APPID={{APPID}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{CITYID}}",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "APPID",
+							"value": "{{APPID}}",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
