@@ -23,7 +23,7 @@
  foreach ($File in $JsonFiles) {
 		$collectionfilepath = "$SourceFilePath\$File"
 		$environmentfilepath = "$SourceFilePath\$EnvironmentFile"
-		node newman run $collectionfilepath -e $environmentfilepath
+		node newman run $collectionfilepath -e $environmentfilepath --disable-unicode
 		
  }
  
