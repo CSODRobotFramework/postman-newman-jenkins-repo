@@ -1,0 +1,100 @@
+{
+	"variables": [],
+	"info": {
+		"name": "FEED",
+		"_postman_id": "54fd2ad3-e2c7-2fcc-14c7-3dbf3c3fce95",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "FEED-VPL-1135",
+			"request": {
+				"url": "http://cracklestorage.blob.core.windows.net/cdnen-us/feeds/WatchActions/catalog_candidate.json",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "1. Verify the @id field is missing from the \"partOfSeason\" field in the JSON document\r\n\r\nFor example:\r\n\r\n\"partOfSeason\":\r\n\r\n{ \"@id\": \"Shark Tank/5\", \"@type\": \"TVSeason\", \"seasonNumber\": 5 }\r\nBECOMES\r\n\r\n\"partOfSeason\":\r\n\r\n{ \"@type\": \"TVSeason\", \"seasonNumber\": 5 }\r\nThe URL for the feed is located here:"
+			},
+			"response": []
+		},
+		{
+			"name": "RefreshChannelRights",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://refreshchannelrights.azurewebsites.net",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": "Azure Function - RefreshChannelRights"
+			},
+			"response": []
+		},
+		{
+			"name": "RefreshChannelRightsQA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Body matches string\"] = responseBody.has(\"Refresh Channel Rights process finished successfully with 0 updates.\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://refreshchannelrights.azurewebsites.net/api/RefreshChannelRightsQA",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"tenants\":[11,13]}"
+				},
+				"description": "This is the Request Channel Rights API for POST"
+			},
+			"response": []
+		},
+		{
+			"name": "FreewheelIVIQA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://freewheelivi.azurewebsites.net/api/FreewheelIVIQA",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": "This is an httpTrigger for IVIFreeWheel that should return 200 source code and the successful body response."
+			},
+			"response": []
+		}
+	]
+}
